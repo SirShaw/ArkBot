@@ -7,7 +7,7 @@ trigger:
 - master-v2-unstable
 
 pool:
-  vmImage: 'default'
+  vmImage: 'mycomputerpool'
 
 name: $(TeamProject)_CIBuild_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
