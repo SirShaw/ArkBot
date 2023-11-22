@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
+- master-v2-unstable
 
 pool:
   vmImage: 'windows-latest'
@@ -91,28 +91,3 @@ jobs:
       archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildNumber).zip'
       replaceExistingArchive: true
       sevenZipCompression: 'maximum'
-
-  - script: git config user.email "arkbot@devops.azure"
-  - script: git config user.name "ARK Bot Azure DevOps"
-  - script: git tag --force latest-master $(sourceVersion)
-  - script: git push --force --tags
-
-  - task: GitHubRelease@1
-    displayName: 'Create GitHub Release'   
-    inputs:
-      gitHubConnection: 'arkbot'
-      repositoryName: '$(Build.Repository.Name)'
-      action: 'edit'
-      target: '$(Build.SourceVersion)'
-      tag: 'latest-master'
-      title: '2.0 Beta: Automated Build (master) - $(dateRev)'
-      releaseNotesSource: 'inline'
-      releaseNotesInline: |
-        This is an automated build compiled from the latest 2.0 beta sources in the master branch.
-        
-        Use this if you want to try the latest features and enhancements and don't mind running a pre-release build to help with testing.
-      isPreRelease: true
-      changeLogCompareToRelease: 'lastFullRelease'
-      changeLogType: 'commitBased'
-      assets: '$(Build.ArtifactStagingDirectory)/*.zip'
-      assetUploadMode: 'delete'
