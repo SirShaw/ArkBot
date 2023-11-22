@@ -6,8 +6,7 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'mycomputerpool'
+pool: mycomputerpool
 
 name: $(TeamProject)_CIBuild_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 
